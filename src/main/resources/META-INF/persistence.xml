@@ -24,8 +24,8 @@
                 value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url"
                 value="jdbc:mysql://localhost:3306/scorecard"/>
-            <property name="hibernate.connection.username" value="gtarcea"/>
-            <property name="hibernate.connection.password" value="gtarcea$%corecar*"/>
+            <property name="hibernate.connection.username" value="fdl"/>
+            <property name="hibernate.connection.password" value=""/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
