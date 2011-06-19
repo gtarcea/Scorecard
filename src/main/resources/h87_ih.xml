@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="billres.xsl"?>
+<!--<?xml version="1.0"?>-->
+<!--<!DOCTYPE bill PUBLIC "-//US Congress//DTDs/bill.dtd//EN" "C:\Program Files\JustSystems\rules\bill.dtd" []>-->
+<!DOCTYPE bill PUBLIC "-//US Congress//DTDs/bill v2.8 20020720//EN" "http://thomas.loc.gov/dtd/bill.dtd">
+<bill bill-stage="Introduced-in-House" bill-type="olc" dms-id="HF89CA458A7364314916D6EC328C87F8A" public-private="public">
+	<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<dublinCore>
+<dc:title>112 HR 87 IH: To repeal the Dodd-Frank Wall Street Reform and Consumer Protection Act.</dc:title>
+<dc:publisher>U.S. House of Representatives</dc:publisher>
+<dc:date>2011-01-05</dc:date>
+<dc:format>text/xml</dc:format>
+<dc:language>EN</dc:language>
+<dc:rights>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</dc:rights>
+</dublinCore>
+</metadata>
+<form>
+		<distribution-code display="yes">I</distribution-code>
+		<congress>112th CONGRESS</congress>
+		<session>1st Session</session>
+		<legis-num>H. R. 87</legis-num>
+		<current-chamber>IN THE HOUSE OF REPRESENTATIVES</current-chamber>
+		<action>
+			<action-date date="20110105">January 5, 2011</action-date>
+			<action-desc><sponsor name-id="B001256">Mrs. Bachmann</sponsor> (for
+			 herself, <cosponsor name-id="M001177">Mr. McClintock</cosponsor>,
+			 <cosponsor name-id="P000599">Mr. Posey</cosponsor>,
+			 <cosponsor name-id="A000358">Mr. Akin</cosponsor>, and
+			 <cosponsor name-id="I000056">Mr. Issa</cosponsor>) introduced the following
+			 bill; which was referred to the <committee-name committee-id="HBA00">Committee
+			 on Financial Services</committee-name>, and in addition to the Committees on
+			 <committee-name committee-id="HAG00">Agriculture</committee-name>,
+			 <committee-name committee-id="HIF00">Energy and Commerce</committee-name>,
+			 <committee-name committee-id="HJU00">the Judiciary</committee-name>,
+			 <committee-name committee-id="HBU00">the Budget</committee-name>,
+			 <committee-name committee-id="HGO00">Oversight and Government
+			 Reform</committee-name>, <committee-name committee-id="HWM00">Ways and
+			 Means</committee-name>, and <committee-name committee-id="HSM00">Small
+			 Business</committee-name>, for a period to be subsequently determined by the
+			 Speaker, in each case for consideration of such provisions as fall within the
+			 jurisdiction of the committee concerned</action-desc>
+		</action>
+		<legis-type>A BILL</legis-type>
+		<official-title>To repeal the Dodd-Frank Wall Street Reform and Consumer
+		  Protection Act.</official-title>
+	</form>
+	<legis-body id="H540B60912AC541E0B0C08FD24AB37398" style="OLC">
+		<section id="H7A1E1721D4BD4F59B1AAE151C1A9D4D8" section-type="section-one"><enum>1.</enum><header>Repeal</header><text display-inline="no-display-inline">The Dodd-Frank Wall Street Reform and
+			 Consumer Protection Act (<external-xref legal-doc="public-law" parsable-cite="pl/111/203">Public Law 111–203</external-xref>) is repealed and the provisions of
+			 law amended by such Act are revived or restored as if such Act had not been
+			 enacted.</text>
+		</section></legis-body>
+</bill>
+
+
