@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" 
+	xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+<!-- -->
+	<jb:bean beanId="bill" class="org.fdl.scorecard.model.Bill"
+		createOnElement="bill">
+		<jb:value property="title" data="form/official-title"/>
+	</jb:bean>
+<!--   -->	
+	<dao:inserter beanId="bill" dao="ncibi" insertOnElement="bill"/>
+	<dao:flusher dao="ncibi" flushOnElement="bill"/>
+
+</smooks-resource-list>	

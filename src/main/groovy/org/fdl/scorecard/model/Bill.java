@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Bill
 {
     private int id;
-    private Chamber chamber;
+    private Chamber chamber = Chamber.HOUSE;
     private String title;
     private Set<Representative> sponsors;
     private Set<Representative> cosponsors;
@@ -60,6 +60,7 @@ public class Bill
     public void setTitle(String title)
     {
         this.title = title;
+        System.out.println("title = >" + title + "<");
     }
 
     @OneToMany(cascade = {

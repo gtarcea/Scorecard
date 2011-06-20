@@ -4,3 +4,4 @@
 target/*
 *.properties
 *.run
+*.txt
