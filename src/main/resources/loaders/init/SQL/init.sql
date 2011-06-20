@@ -1,8 +1,10 @@
 --
--- Initializes the database.
+-- Setup the database.
 --
-drop table if exists fdl.Representative;
+
+drop table if exists fdl.Bill2Representative;
 drop table if exists fdl.Bill;
+drop table if exists fdl.Representative;
 
 create table fdl.Representative (
 	id int AUTO_INCREMENT primary key,
@@ -18,7 +20,9 @@ create table fdl.Bill (
 );
 
 create table fdl.Bill2Representative (
-	billid int foreign key references Bill(id),
-	representativeid int foreign key references Representative(id)
+    billid int not null,
+    representativeid int not null,
+	foreign key (billid) references fdl.Bill(id),
+	foreign key (representativeid) references fdl.Representative(id)
 );
 

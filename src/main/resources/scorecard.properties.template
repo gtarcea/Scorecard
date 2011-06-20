@@ -2,5 +2,5 @@ user.name=
 user.password=
 db.server=
 db.driver=com.mysql.jdbc.Driver
-db.url=jdbc:mysql://localhost/scorecard?user=__USERNAME__&password=__PASSWORD__
+db.url=jdbc:mysql://localhost/scorecard?allowMultiQueries=true
 persistence-unit=scorecard
