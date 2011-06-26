@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<smooks-resource-list
+    xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+    xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd"
+    xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+    xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+    <params>
+        <param name="stream.filter.type">SAX</param>
+    </params>
+
+    <!-- &#x9; == tab character -->
+                       <!--  1    2      3       4       5       6            7         8        9        10      11       12   -->
+    <csv:reader fields="cycle,FECCandID,CID,FirstLastP,Party,DistIDRunFor,DistIDCurr,CurrCand,CycleCand,CRPICO,RecipCode,NoPacs"
+            separator=",">
+    </csv:reader>
+
+    <jb:bean beanId="os-candidate" class="org.fdl.scorecard.loader.opensecrets.OpenSecretsCandidate"
+            createOnElement="csv-record">
+        <jb:value property="fecId" data="FECCandID"/>
+        <jb:value property="cid" data="CID"/>
+        <jb:value property="firstLastName" data="FirstLastP"/>
+        <jb:value property="party" data="Party"/>
+        <jb:value property="districtIdRunFor" data="DistIDRunFor"/>
+        <jb:value property="currentDistrictId" data="DistIDCurr"/>
+        <jb:value property="currentlyRunning" data="CurrCand"/>
+        <jb:value property="previouslyRan" data="CycleCand"/>
+        <jb:value property="candidateType" data="CRPICO"/>
+        <jb:value property="noPacs" data="NoPacs"/>
+    </jb:bean>
+
+    <dao:inserter beanId="os-candidate" dao="ncibi" insertOnElement="csv-record" />
+    <dao:flusher dao="ncibi" flushOnElement="csv-set"/>
+
+</smooks-resource-list>

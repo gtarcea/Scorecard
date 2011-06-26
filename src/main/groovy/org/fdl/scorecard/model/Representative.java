@@ -14,10 +14,19 @@ import javax.persistence.Table;
 public class Representative
 {
     private int id;
+    private String fecId;
+    private String cid;
     private String lastName;
-    private String firstName;   
+    private String firstName;
+    private PoliticalParty party;
+    private String districtIdRunFor;
+    private String currentDistrictId;
+    private boolean currentlyRunning;
+    private boolean previouslyRan;
+    private CandidateType candidateType;
+    private boolean noPacs;
     private Committee committee;
-
+    
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,6 +38,106 @@ public class Representative
     public void setId(int id)
     {
         this.id = id;
+    }
+    
+    @Column(name = "fecId")
+    public String getFecId()
+    {
+        return fecId;
+    }
+
+    public void setFecId(String fecId)
+    {
+        this.fecId = fecId;
+    }
+
+    @Column(name = "cid")
+    public String getCid()
+    {
+        return cid;
+    }
+
+    public void setCid(String cid)
+    {
+        this.cid = cid;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "party")
+    public PoliticalParty getParty()
+    {
+        return party;
+    }
+    
+    public void setParty(PoliticalParty party)
+    {
+        this.party = party;
+    }
+
+    @Column(name = "districtIdRunFor")
+    public String getDistrictIdRunFor()
+    {
+        return districtIdRunFor;
+    }
+
+    public void setDistrictIdRunFor(String districtIdRunFor)
+    {
+        this.districtIdRunFor = districtIdRunFor;
+    }
+
+    @Column(name = "currentDistrictId")
+    public String getCurrentDistrictId()
+    {
+        return currentDistrictId;
+    }
+
+    public void setCurrentDistrictId(String currentDistrictId)
+    {
+        this.currentDistrictId = currentDistrictId;
+    }
+
+    @Column(name = "currentlyRunning")
+    public boolean isCurrentlyRunning()
+    {
+        return currentlyRunning;
+    }
+
+    public void setCurrentlyRunning(boolean currentlyRunning)
+    {
+        this.currentlyRunning = currentlyRunning;
+    }
+
+    @Column(name = "previouslyRan")
+    public boolean isPreviouslyRan()
+    {
+        return previouslyRan;
+    }
+
+    public void setPreviouslyRan(boolean previouslyRan)
+    {
+        this.previouslyRan = previouslyRan;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "candidateType")
+    public CandidateType getCandidateType()
+    {
+        return candidateType;
+    }
+
+    public void setCandidateType(CandidateType candidateType)
+    {
+        this.candidateType = candidateType;
+    }
+
+    public boolean isNoPacs()
+    {
+        return noPacs;
+    }
+
+    public void setNoPacs(boolean noPacs)
+    {
+        this.noPacs = noPacs;
     }
 
     @Column(name = "lastName")

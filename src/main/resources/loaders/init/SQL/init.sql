@@ -8,8 +8,17 @@ drop table if exists fdl.Representative;
 
 create table fdl.Representative (
 	id int AUTO_INCREMENT primary key,
+	fecId varchar(12),
+	cid varchar(12),
 	lastName varchar(64),
 	firstName varchar(64),
+	party varchar(32),
+	districtIdRunFor varchar(8),
+	currentDistrictId varchar(8),
+	currentlyRunning bool,
+	previouslyRan bool,
+	candidateType varchar(32),
+	noPacs bool,
 	committee varchar(64)
 );
 
