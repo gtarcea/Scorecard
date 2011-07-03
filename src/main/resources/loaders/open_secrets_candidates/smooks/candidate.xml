@@ -27,6 +27,10 @@
 			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
 			<jb:decodeParam name="cleaner">|</jb:decodeParam>
 		</jb:value>
+		
+		<jb:value property="firstName" data="FirstLastP" decoder="String">
+			<jb:decodeParam name="valuePreprocess">value.split(" ")[0]</jb:decodeParam>
+		</jb:value>
 	<!--  
 		<jb:value property="firstLastName" data="FirstLastP"
 			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
