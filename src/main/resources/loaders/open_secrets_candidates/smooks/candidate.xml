@@ -1,35 +1,86 @@
 <?xml version="1.0"?>
-<smooks-resource-list
-    xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
-    xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd"
-    xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
-    xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
 
-    <params>
-        <param name="stream.filter.type">SAX</param>
-    </params>
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
 
-    <!-- &#x9; == tab character -->
-                       <!--  1    2      3       4       5       6            7         8        9        10      11       12   -->
-    <csv:reader fields="cycle,FECCandID,CID,FirstLastP,Party,DistIDRunFor,DistIDCurr,CurrCand,CycleCand,CRPICO,RecipCode,NoPacs"
-            separator=",">
-    </csv:reader>
+	<!-- &#x9; == tab character -->
+	
+	<csv:reader
+	<!--          1        2     3       4       5       6           7           8       9         10      11      12 -->
+		fields="cycle,FECCandID,CID,FirstLastP,Party,DistIDRunFor,DistIDCurr,CurrCand,CycleCand,CRPICO,RecipCode,NoPacs"
+		separator=",">
+	</csv:reader>
 
-    <jb:bean beanId="os-candidate" class="org.fdl.scorecard.loader.opensecrets.OpenSecretsCandidate"
-            createOnElement="csv-record">
-        <jb:value property="fecId" data="FECCandID"/>
-        <jb:value property="cid" data="CID"/>
-        <jb:value property="firstLastName" data="FirstLastP"/>
-        <jb:value property="party" data="Party"/>
-        <jb:value property="districtIdRunFor" data="DistIDRunFor"/>
-        <jb:value property="currentDistrictId" data="DistIDCurr"/>
-        <jb:value property="currentlyRunning" data="CurrCand"/>
-        <jb:value property="previouslyRan" data="CycleCand"/>
-        <jb:value property="candidateType" data="CRPICO"/>
-        <jb:value property="noPacs" data="NoPacs"/>
-    </jb:bean>
+	<jb:bean beanId="os-candidate" class="org.fdl.scorecard.model.Representative"
+		createOnElement="csv-record">
+		
+		<jb:value property="fecId" data="FECCandID"
+			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="cid" data="CID"
+			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+		</jb:value>
+	<!--  
+		<jb:value property="firstLastName" data="FirstLastP"
+			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+		</jb:value>
+-->
+		<jb:value property="party" data="Party" decoder="Enum">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty</jb:decodeParam>
+			<jb:decodeParam name="|D|">DEMOCRAT</jb:decodeParam>
+			<jb:decodeParam name="|R|">REPUBLICAN</jb:decodeParam>
+			<jb:decodeParam name="|I|">INDEPENDENT</jb:decodeParam>
+			<jb:decodeParam name="|L|">LIBERTARIAN</jb:decodeParam>
+			<jb:decodeParam name="|3|">THIRD_PARTY</jb:decodeParam>
+		</jb:value>
 
-    <dao:inserter beanId="os-candidate" dao="ncibi" insertOnElement="csv-record" />
-    <dao:flusher dao="ncibi" flushOnElement="csv-set"/>
+		<jb:value property="districtIdRunFor" data="DistIDRunFor"
+			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+		</jb:value>
+
+		<jb:value property="currentDistrictId" data="DistIDCurr"
+			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+		</jb:value>
+
+		<jb:value property="currentlyRunning" data="CurrCand"
+			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+		</jb:value>
+
+		<jb:value property="previouslyRan" data="CycleCand"
+			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+		</jb:value>
+
+		<jb:value property="candidateType" data="CRPICO" decoder="Enum">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.CandidateType
+			</jb:decodeParam>
+			<jb:decodeParam name="|I|">INCUMBENT</jb:decodeParam>
+			<jb:decodeParam name="|C|">CHALLENGER</jb:decodeParam>
+			<jb:decodeParam name="|O|">OPEN_SEAT</jb:decodeParam>
+		</jb:value>
+
+		<jb:value property="noPacs" data="NoPacs"
+			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
+			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+		</jb:value>
+	</jb:bean>
+
+	<dao:inserter beanId="os-candidate" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
 
 </smooks-resource-list>

@@ -173,4 +173,14 @@ public class Representative
     {
         this.committee = committee;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Representative [id=" + id + ", fecId=" + fecId + ", cid=" + cid + ", lastName=" + lastName
+                + ", firstName=" + firstName + ", party=" + party + ", districtIdRunFor=" + districtIdRunFor
+                + ", currentDistrictId=" + currentDistrictId + ", currentlyRunning=" + currentlyRunning
+                + ", previouslyRan=" + previouslyRan + ", candidateType=" + candidateType + ", noPacs="
+                + noPacs + ", committee=" + committee + "]";
+    }
 }

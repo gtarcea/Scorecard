@@ -1,4 +1,4 @@
 
 def persister = { s, data, flushing ->
-    s.saveOrUpdate(data.representative)
+    println(data)
 }
