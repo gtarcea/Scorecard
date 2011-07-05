@@ -60,7 +60,6 @@ public class Bill
     public void setTitle(String title)
     {
         this.title = title;
-        System.out.println("title = >" + title + "<");
     }
 
     @OneToMany(cascade = {

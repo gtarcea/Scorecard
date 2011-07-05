@@ -7,43 +7,46 @@
 		<param name="stream.filter.type">SAX</param>
 	</params>
 
-	<!-- &#x9; == tab character -->
-	
 	<csv:reader
-	<!--          1        2     3       4       5       6           7           8       9         10      11      12 -->
 		fields="cycle,FECCandID,CID,FirstLastP,Party,DistIDRunFor,DistIDCurr,CurrCand,CycleCand,CRPICO,RecipCode,NoPacs"
-		separator=",">
+		separator="&#x9;">
 	</csv:reader>
 
 	<jb:bean beanId="os-candidate" class="org.fdl.scorecard.model.Representative"
 		createOnElement="csv-record">
-		
+
 		<jb:value property="fecId" data="FECCandID"
 			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
 			<jb:decodeParam name="cleaner">|</jb:decodeParam>
 		</jb:value>
-		
+
 		<jb:value property="cid" data="CID"
 			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
 			<jb:decodeParam name="cleaner">|</jb:decodeParam>
 		</jb:value>
-		
+
 		<jb:value property="firstName" data="FirstLastP" decoder="String">
 			<jb:decodeParam name="valuePreprocess">value.split(" ")[0]</jb:decodeParam>
 		</jb:value>
-	<!--  
-		<jb:value property="firstLastName" data="FirstLastP"
-			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
+
+		<jb:value property="lastName" data="FirstLastP" decoder="String">
+			<jb:decodeParam name="valuePreprocess">
+				lastspace = value.lastIndexOf(" ");
+				firstlastspace = value.lastIndexOf(" ", lastspace-1);
+				value.substring(firstlastspace+1, lastspace);
+			</jb:decodeParam>
 		</jb:value>
--->
+
 		<jb:value property="party" data="Party" decoder="Enum">
-			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
+			</jb:decodeParam>
 			<jb:decodeParam name="|D|">DEMOCRAT</jb:decodeParam>
 			<jb:decodeParam name="|R|">REPUBLICAN</jb:decodeParam>
 			<jb:decodeParam name="|I|">INDEPENDENT</jb:decodeParam>
 			<jb:decodeParam name="|L|">LIBERTARIAN</jb:decodeParam>
 			<jb:decodeParam name="|3|">THIRD_PARTY</jb:decodeParam>
+			<jb:decodeParam name="|U|">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="| |">UNKNOWN</jb:decodeParam>
 		</jb:value>
 
 		<jb:value property="districtIdRunFor" data="DistIDRunFor"
@@ -57,15 +60,31 @@
 		</jb:value>
 
 		<jb:value property="currentlyRunning" data="CurrCand"
-			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+			decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "|Y|")
+				{
+				return "true";
+				}
+				else
+				{
+				return "false";
+				}
+			</jb:decodeParam>
 		</jb:value>
 
-		<jb:value property="previouslyRan" data="CycleCand"
-			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+		<jb:value property="previouslyRan" data="CycleCand" decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "|Y|")
+				{
+				return
+				"true";
+				}
+				else
+				{
+				return "false";
+				}
+			</jb:decodeParam>
 		</jb:value>
 
 		<jb:value property="candidateType" data="CRPICO" decoder="Enum">
@@ -74,12 +93,21 @@
 			<jb:decodeParam name="|I|">INCUMBENT</jb:decodeParam>
 			<jb:decodeParam name="|C|">CHALLENGER</jb:decodeParam>
 			<jb:decodeParam name="|O|">OPEN_SEAT</jb:decodeParam>
+			<jb:decodeParam name="| |">UNKNOWN</jb:decodeParam>
 		</jb:value>
 
-		<jb:value property="noPacs" data="NoPacs"
-			decoder="org.ncibi.commons.smooks.decoder.ReflectiveTypeStringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-			<jb:decodeParam name="type">java.lang.Boolean</jb:decodeParam>
+		<jb:value property="noPacs" data="NoPacs" decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "|Y|")
+				{
+				return
+				"true";
+				}
+				else
+				{
+				return "false";
+				}
+			</jb:decodeParam>
 		</jb:value>
 	</jb:bean>
 
