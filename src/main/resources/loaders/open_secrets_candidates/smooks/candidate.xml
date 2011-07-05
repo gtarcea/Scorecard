@@ -15,20 +15,13 @@
 	<jb:bean beanId="os-candidate" class="org.fdl.scorecard.model.Representative"
 		createOnElement="csv-record">
 
-		<jb:value property="fecId" data="FECCandID"
-			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-		</jb:value>
-
-		<jb:value property="cid" data="CID"
-			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-		</jb:value>
-
+		<jb:value property="fecId" data="FECCandID"/>
+		<jb:value property="cid" data="CID"/>
+  
 		<jb:value property="firstName" data="FirstLastP" decoder="String">
 			<jb:decodeParam name="valuePreprocess">value.split(" ")[0]</jb:decodeParam>
 		</jb:value>
-
+  
 		<jb:value property="lastName" data="FirstLastP" decoder="String">
 			<jb:decodeParam name="valuePreprocess">
 				lastspace = value.lastIndexOf(" ");
@@ -37,78 +30,71 @@
 			</jb:decodeParam>
 		</jb:value>
 
-		<jb:value property="party" data="Party" decoder="Enum">
+		<jb:value property="party" data="Party" decoder="org.ncibi.commons.smooks.decoder.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
 			</jb:decodeParam>
-			<jb:decodeParam name="|D|">DEMOCRAT</jb:decodeParam>
-			<jb:decodeParam name="|R|">REPUBLICAN</jb:decodeParam>
-			<jb:decodeParam name="|I|">INDEPENDENT</jb:decodeParam>
-			<jb:decodeParam name="|L|">LIBERTARIAN</jb:decodeParam>
-			<jb:decodeParam name="|3|">THIRD_PARTY</jb:decodeParam>
-			<jb:decodeParam name="|U|">UNKNOWN</jb:decodeParam>
-			<jb:decodeParam name="| |">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="D">DEMOCRAT</jb:decodeParam>
+			<jb:decodeParam name="R">REPUBLICAN</jb:decodeParam>
+			<jb:decodeParam name="I">INDEPENDENT</jb:decodeParam>
+			<jb:decodeParam name="L">LIBERTARIAN</jb:decodeParam>
+			<jb:decodeParam name="3">THIRD_PARTY</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
 
-		<jb:value property="districtIdRunFor" data="DistIDRunFor"
-			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-		</jb:value>
-
-		<jb:value property="currentDistrictId" data="DistIDCurr"
-			decoder="org.ncibi.commons.smooks.decoder.StringCleanerDecoder">
-			<jb:decodeParam name="cleaner">|</jb:decodeParam>
-		</jb:value>
+		<jb:value property="districtIdRunFor" data="DistIDRunFor"/>
+		<jb:value property="currentDistrictId" data="DistIDCurr"/>
 
 		<jb:value property="currentlyRunning" data="CurrCand"
 			decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
-				if (value == "|Y|")
+				if (value == "Y")
 				{
-				return "true";
+					return "true";
 				}
 				else
 				{
-				return "false";
+					return "false";
 				}
 			</jb:decodeParam>
 		</jb:value>
 
 		<jb:value property="previouslyRan" data="CycleCand" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
-				if (value == "|Y|")
+				if (value == "Y")
 				{
-				return
-				"true";
+					return "true";
 				}
 				else
 				{
-				return "false";
+					return "false";
 				}
 			</jb:decodeParam>
 		</jb:value>
 
-		<jb:value property="candidateType" data="CRPICO" decoder="Enum">
+		<jb:value property="candidateType" data="CRPICO" decoder="org.ncibi.commons.smooks.decoder.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.CandidateType
 			</jb:decodeParam>
-			<jb:decodeParam name="|I|">INCUMBENT</jb:decodeParam>
-			<jb:decodeParam name="|C|">CHALLENGER</jb:decodeParam>
-			<jb:decodeParam name="|O|">OPEN_SEAT</jb:decodeParam>
-			<jb:decodeParam name="| |">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="I">INCUMBENT</jb:decodeParam>
+			<jb:decodeParam name="C">CHALLENGER</jb:decodeParam>
+			<jb:decodeParam name="O">OPEN_SEAT</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
 
 		<jb:value property="noPacs" data="NoPacs" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
-				if (value == "|Y|")
+				if (value == "Y")
 				{
-				return
-				"true";
+					return "true";
 				}
 				else
 				{
-				return "false";
+					return "false";
 				}
 			</jb:decodeParam>
 		</jb:value>
+
 	</jb:bean>
 
 	<dao:inserter beanId="os-candidate" dao="ncibi"

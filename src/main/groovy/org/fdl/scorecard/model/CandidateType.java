@@ -2,7 +2,7 @@ package org.fdl.scorecard.model;
 
 public enum CandidateType
 {
-    INCUMBENT, CHALLENGER, OPEN_SEAT, UNKNOWN;
+    INCUMBENT, CHALLENGER, OPEN_SEAT, UNKNOWN, TUNKNOWN;
     
     public static CandidateType toCandidateType(String what)
     {
