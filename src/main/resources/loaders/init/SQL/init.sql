@@ -5,6 +5,8 @@
 drop table if exists fdl.Bill2Representative;
 drop table if exists fdl.Bill;
 drop table if exists fdl.Representative;
+drop table if exists fdl.Pac;
+drop table if exists fdl.CRPCategory;
 
 create table fdl.Representative (
 	id int AUTO_INCREMENT primary key,
@@ -35,3 +37,30 @@ create table fdl.Bill2Representative (
 	foreign key (representativeid) references fdl.Representative(id)
 );
 
+create table fdl.Pac (
+	id int AUTO_INCREMENT primary key,
+	cycle int,
+	pacId varchar(12),
+	pacName varchar(48),
+	affiliate varchar(48),
+	parentOrganization varchar(48),
+	recipientId varchar(12),
+	pacType varchar(24),
+	fecId varchar(12),
+	party varchar(32),
+	primCode varchar(8),
+	primCodeSource varchar(8),
+	impactCCommittee bool,
+	foreignn bool,
+    active bool
+);
+
+create table fdl.CRPCategory (
+	id int AUTO_INCREMENT primary key,
+	categoryCode varchar(8),
+	categoryName varchar(64),
+	categoryOrder varchar(8),
+	industry varchar(64),
+	sector varchar(64),
+	sectorLong varchar(128)
+);

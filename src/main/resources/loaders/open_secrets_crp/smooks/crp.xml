@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="Catcode, Catname, Catorder, Industry, Sector, SectorLong"
+		skipLines = "9"
+		separator="&#x9;">
+	</csv:reader>
+
+	<jb:bean beanId="os-crp" class="org.fdl.scorecard.model.CRPCategory"
+		createOnElement="csv-record">
+
+		<jb:value property="categoryCode" data="Catcode"/>
+		<jb:value property="categoryName" data="Catname"/>
+		<jb:value property="categoryOrder" data="Catorder"/>
+		<jb:value property="industry" data="Industry"/>
+		<jb:value property="sector" data="Sector"/>
+		<jb:value property="sectorLong" data="SectorLong"/>
+
+	</jb:bean>
+
+	<dao:inserter beanId="os-crp" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>

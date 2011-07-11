@@ -25,7 +25,7 @@ public class Representative
     private boolean previouslyRan;
     private CandidateType candidateType;
     private boolean noPacs;
-    private Committee committee;
+    //private Committee committee;
     
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -162,17 +162,17 @@ public class Representative
         this.firstName = firstName;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "committee")
-    public Committee getCommittee()
-    {
-        return committee;
-    }
-
-    public void setCommittee(Committee committee)
-    {
-        this.committee = committee;
-    }
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "committee")
+//    public Committee getCommittee()
+//    {
+//        return committee;
+//    }
+//
+//    public void setCommittee(Committee committee)
+//    {
+//        this.committee = committee;
+//    }
 
     @Override
     public String toString()
@@ -181,6 +181,6 @@ public class Representative
                 + ", firstName=" + firstName + ", party=" + party + ", districtIdRunFor=" + districtIdRunFor
                 + ", currentDistrictId=" + currentDistrictId + ", currentlyRunning=" + currentlyRunning
                 + ", previouslyRan=" + previouslyRan + ", candidateType=" + candidateType + ", noPacs="
-                + noPacs + ", committee=" + committee + "]";
+                + noPacs + "]"; //", committee=" + committee + "]";
     }
 }

@@ -1,6 +1,6 @@
 package org.fdl.scorecard.model;
 
-public enum Committee
+public enum PacType
 {
     NONE;
 }
