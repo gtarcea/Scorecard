@@ -1,5 +1,5 @@
 
 def persister = { s, data, flushing ->
-    println(data)
+    //println(data)
     s.saveOrUpdate(data);
 }

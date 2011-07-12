@@ -49,9 +49,9 @@ create table fdl.Pac (
 	fecId varchar(12),
 	party varchar(32),
 	primCode varchar(8),
-	primCodeSource varchar(8),
+	primCodeSource varchar(16),
 	impactCCommittee bool,
-	foreignn bool,
+	foreignEntity bool,
     active bool
 );
 

@@ -8,28 +8,45 @@
 	</params>
 
 	<csv:reader
-		fields="cycle,CmteID,PACShort,Affiliate,Ultorg,RecipID,RecipCode,FECCandID,Party,PrimCode,Source,Sensitive,Foreign,Active"
+		fields="cycle,CmteID,PACShort?trim,Affiliate,Ultorg,RecipID,RecipCode,FECCandID,Party,PrimCode,Source,Sensitive,Foreign,Active"
 		separator="&#x9;">
 	</csv:reader>
 
-	<jb:bean beanId="os-candidate" class="org.fdl.scorecard.model.Pac"
+	<jb:bean beanId="os-pac" class="org.fdl.scorecard.model.Pac"
 		createOnElement="csv-record">
 
 		<jb:value property="cycle" data="cycle"/>
 		<jb:value property="pacId" data="CmteID"/>
 		<jb:value property="pacName" data="PACShort"/>
   		<jb:value property="affiliate" data="Affiliate"/>
-  		<jb:value property="parentOranization" data="Ultorg"/>
+  		<jb:value property="parentOrganization" data="Ultorg"/>
 		<jb:value property="recipientId" data="RecipID"/>
-		<jb:value property="pacType" data="RecipCode" decoder="org.ncibi.commons.smooks.decoder.DefaultEnumDecoder">
+		<jb:value property="pacType" data="RecipCode" decoder="DefaultedEnum">
 			<jb:decodeParam name="valuePreprocess">
+			    if (value == "")
+			        return "U";
+			    else if (value[0] == "P")
+					return value[1];
+				else if (value[1] == "P")
+					return "P";
+				else
+					return "C";		
 			</jb:decodeParam>
-			<jb:decodeParam name="baseDecoder">"org.ncibi.commons.smooks.decoder.DefaultEnumDecoder"</jb:decodeParam>
-			<jb:decodeParam name="enumType">org.fdl.scorecode.model.PacType</jb:decodeParam>
-			<jb:decodeParam name=""
+			<jb:decodeParam name="baseDecoder">DefaultedEnum</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PacType</jb:decodeParam>
+			<jb:decodeParam name="P">PARTY</jb:decodeParam>
+			<jb:decodeParam name="C">CANDIDATE</jb:decodeParam>
+			<jb:decodeParam name="B">BUSINESS</jb:decodeParam>
+			<jb:decodeParam name="L">LABOR</jb:decodeParam>
+			<jb:decodeParam name="I">IDEOLOGICAL</jb:decodeParam>
+			<jb:decodeParam name="O">OTHER</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
-
-		<jb:value property="party" data="Party" decoder="org.ncibi.commons.smooks.decoder.DefaultedEnumDecoder">
+		
+		<jb:value property="fecId" data="FECCandID"/>
+		
+		<jb:value property="party" data="Party" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
 			</jb:decodeParam>
 			<jb:decodeParam name="D">DEMOCRAT</jb:decodeParam>
@@ -40,12 +57,11 @@
 			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
-
-		<jb:value property="districtIdRunFor" data="DistIDRunFor"/>
-		<jb:value property="currentDistrictId" data="DistIDCurr"/>
-
-		<jb:value property="currentlyRunning" data="CurrCand"
-			decoder="Boolean">
+		
+		<jb:value property="primCode" data="PrimCode"/>
+		<jb:value property="primCodeSource" data="Source"/>
+		
+		<jb:value property="impactCCommittee" data="Sensitive" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
 				if (value == "Y")
 				{
@@ -57,10 +73,10 @@
 				}
 			</jb:decodeParam>
 		</jb:value>
-
-		<jb:value property="previouslyRan" data="CycleCand" decoder="Boolean">
+		
+		<jb:value property="foreignEntity" data="Foreign" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
-				if (value == "Y")
+				if (value == "1")
 				{
 					return "true";
 				}
@@ -70,20 +86,10 @@
 				}
 			</jb:decodeParam>
 		</jb:value>
-
-		<jb:value property="candidateType" data="CRPICO" decoder="org.ncibi.commons.smooks.decoder.DefaultedEnumDecoder">
-			<jb:decodeParam name="enumType">org.fdl.scorecard.model.CandidateType
-			</jb:decodeParam>
-			<jb:decodeParam name="I">INCUMBENT</jb:decodeParam>
-			<jb:decodeParam name="C">CHALLENGER</jb:decodeParam>
-			<jb:decodeParam name="O">OPEN_SEAT</jb:decodeParam>
-			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
-			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
-		</jb:value>
-
-		<jb:value property="noPacs" data="NoPacs" decoder="Boolean">
+		
+		<jb:value property="active" data="Active" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
-				if (value == "Y")
+				if (value == "1")
 				{
 					return "true";
 				}
@@ -93,10 +99,10 @@
 				}
 			</jb:decodeParam>
 		</jb:value>
-
+		
 	</jb:bean>
 
-	<dao:inserter beanId="os-candidate" dao="ncibi"
+	<dao:inserter beanId="os-pac" dao="ncibi"
 		insertOnElement="csv-record" />
 	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
 

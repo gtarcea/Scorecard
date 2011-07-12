@@ -2,5 +2,5 @@ package org.fdl.scorecard.model;
 
 public enum PacType
 {
-    NONE;
+    CANDIDATE, PARTY, BUSINESS, LABOR, IDEOLOGICAL, OTHER, UNKNOWN;
 }
