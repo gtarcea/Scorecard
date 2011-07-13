@@ -9,7 +9,8 @@
 
 	<csv:reader
 		fields="cycle,CmteID,PACShort?trim,Affiliate,Ultorg,RecipID,RecipCode,FECCandID,Party,PrimCode,Source,Sensitive,Foreign,Active"
-		separator="&#x9;">
+		quote="|"
+		separator=",">
 	</csv:reader>
 
 	<jb:bean beanId="os-pac" class="org.fdl.scorecard.model.Pac"

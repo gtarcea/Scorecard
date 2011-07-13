@@ -9,7 +9,8 @@
 
 	<csv:reader
 		fields="cycle,FECCandID,CID,FirstLastP,Party,DistIDRunFor,DistIDCurr,CurrCand,CycleCand,CRPICO,RecipCode,NoPacs"
-		separator="&#x9;">
+		quote="|"
+		separator=",">
 	</csv:reader>
 
 	<jb:bean beanId="os-candidate" class="org.fdl.scorecard.model.Representative"
