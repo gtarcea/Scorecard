@@ -1,5 +1,5 @@
-drop table if exists fdl.PacIndividualContribution;
-create table fdl.PacIndividualContribution (
+drop table if exists fdl.PacCandidateContribution;
+create table fdl.PacCandidateContribution (
 	id int AUTO_INCREMENT primary key,
 	cycle int,
 	fecTransactionId varchar(16),

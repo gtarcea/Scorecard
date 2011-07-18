@@ -11,9 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name = "sc.PacIndividualContribution")
-@Table(name = "PacIndividualContribution", schema = "fdl")
-public class PacIndividualContribution
+@Entity(name = "sc.PacCandidateContribution")
+@Table(name = "PacCandidateContribution", schema = "fdl")
+public class PacCandidateContribution
 {
     private int id;
     private int cycle;

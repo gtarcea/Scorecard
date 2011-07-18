@@ -13,7 +13,7 @@
 		separator=",">
 	</csv:reader>
 
-	<jb:bean beanId="os-pac-indiv" class="org.fdl.scorecard.model.PacIndividualContribution"
+	<jb:bean beanId="os-pac-indiv" class="org.fdl.scorecard.model.PacCandidateContribution"
 		createOnElement="csv-record">
 
 		<jb:value property="cycle" data="cycle"/>

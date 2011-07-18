@@ -7,7 +7,7 @@ drop table if exists fdl.Bill;
 drop table if exists fdl.Representative;
 drop table if exists fdl.Pac;
 drop table if exists fdl.CRPCategory;
-drop table if exists fdl.PacIndividualContribution;
+drop table if exists fdl.PacCandidateContribution;
 
 create table fdl.Representative (
 	id int AUTO_INCREMENT primary key,
@@ -66,7 +66,7 @@ create table fdl.CRPCategory (
 	sectorLong varchar(128)
 );
 
-create table fdl.PacIndividualContribution (
+create table fdl.PacCandidateContribution (
 	id int AUTO_INCREMENT primary key,
 	cycle int,
 	fecTransactionId varchar(16),
