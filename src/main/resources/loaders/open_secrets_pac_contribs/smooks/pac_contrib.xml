@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="cycle,FECRecNo,Filerid,DonorCmte,ContribLendTrans,City,State,Zip,FECOccEmp,PrimCode,Date,Amount,RecipID,Party,Otherid,RecipCode,RecipPrimCode,Amend,Report,PG,Microfilm,Type,RealCode,Source"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="os-pac-contrib" class="org.fdl.scorecard.model.PacContribution"
+		createOnElement="csv-record">
+
+		<jb:value property="cycle" data="cycle"/>
+		<jb:value property="fecTransactionId" data="FECRecNo"/>
+		<jb:value property="pacId" data="PACID"/>
+		<jb:value property="donorPac" data="DonorCmte"/>
+		<jb:value property="reportedName" data="ContribLendTrans"/>
+		<jb:value property="reportedEmployer" data="FECOccEmp"/>
+		<jb:value property="primCode" data="PrimCode"/>
+		<jb:value property="contribDate" data="Date" decoder="Date">
+			<jb:decodeParam name="format">mm/dd/yyyy</jb:decodeParam>
+		</jb:value>
+		<jb:value property="amount" data="Amount"/>
+		<jb:value property="recipientId" data="RecipID"/>
+		<jb:value property="party" data="Party" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
+			</jb:decodeParam>
+			<jb:decodeParam name="D">DEMOCRAT</jb:decodeParam>
+			<jb:decodeParam name="R">REPUBLICAN</jb:decodeParam>
+			<jb:decodeParam name="I">INDEPENDENT</jb:decodeParam>
+			<jb:decodeParam name="L">LIBERTARIAN</jb:decodeParam>
+			<jb:decodeParam name="3">THIRD_PARTY</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		<jb:value property="committeeId" data="Otherid"/>
+		<jb:value property="recipientType" data="RecipCode" decoder="DefaultedEnum">
+			<jb:decodeParam name="valuePreprocess">
+				if(value == "")
+					return "U";
+				else if (value[0] == "P")
+					return "P";
+				else
+					return "C";
+			</jb:decodeParam>
+			<jb:decodeParam name="baseDecoder">DefaultedEnum</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.RecipientType</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="P">PAC_RECIP</jb:decodeParam>
+			<jb:decodeParam name="C">CANDIDATE_RECIP</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="primCode" data="RealCode"/>
+		<jb:value property="contributionType" data="Type" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.ContributionType</jb:decodeParam>
+			<jb:decodeParam name="24A">INDEPENDENT_CONTRIBUTION</jb:decodeParam>
+			<jb:decodeParam name="24C">COORDINATED_EXPENDITURE</jb:decodeParam>
+			<jb:decodeParam name="24E">INDEPENDENT_EXPENDITURE</jb:decodeParam>
+			<jb:decodeParam name="24F">COMMUNICATION_COST_FOR_CANDIDATE</jb:decodeParam>
+			<jb:decodeParam name="24K">DIRECT_CONTRIBUTION</jb:decodeParam>
+			<jb:decodeParam name="24N">COMMUNICATION_COST_AGAINST_CANDIDATE</jb:decodeParam>
+			<jb:decodeParam name="24Z">IN_KIND_CONTRIBUTION</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>	
+		<jb:value property="directContribution" data="DI" decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "D")
+				{
+					return "true";
+				}
+				else
+				{
+					return "false";
+				}
+			</jb:decodeParam>
+		</jb:value>
+		<jb:value property="fecCandidateId" data="FECCandID"/>
+	</jb:bean>
+
+	<dao:inserter beanId="os-pac-contrib" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>
