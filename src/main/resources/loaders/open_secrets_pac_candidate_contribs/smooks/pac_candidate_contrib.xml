@@ -21,10 +21,13 @@
 		<jb:value property="pacId" data="PACID"/>
 		<jb:value property="cid" data ="CID"/>
 		<jb:value property="amount" data="Amount"/>
+		
 		<jb:value property="contribDate" data="Date" decoder="Date">
 			<jb:decodeParam name="format">mm/dd/yyyy</jb:decodeParam>
 		</jb:value>
+		
 		<jb:value property="primCode" data="RealCode"/>
+		
 		<jb:value property="contributionType" data="Type" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.ContributionType</jb:decodeParam>
 			<jb:decodeParam name="24A">INDEPENDENT_CONTRIBUTION</jb:decodeParam>
@@ -36,6 +39,7 @@
 			<jb:decodeParam name="24Z">IN_KIND_CONTRIBUTION</jb:decodeParam>
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>	
+		
 		<jb:value property="directContribution" data="DI" decoder="Boolean">
 			<jb:decodeParam name="valuePreprocess">
 				if (value == "D")
@@ -48,7 +52,9 @@
 				}
 			</jb:decodeParam>
 		</jb:value>
+		
 		<jb:value property="fecCandidateId" data="FECCandID"/>
+		
 	</jb:bean>
 
 	<dao:inserter beanId="os-pac-indiv" dao="ncibi"

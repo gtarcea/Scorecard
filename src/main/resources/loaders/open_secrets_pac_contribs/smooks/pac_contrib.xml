@@ -23,11 +23,14 @@
 		<jb:value property="reportedName" data="ContribLendTrans"/>
 		<jb:value property="reportedEmployer" data="FECOccEmp"/>
 		<jb:value property="primCode" data="PrimCode"/>
+		
 		<jb:value property="contribDate" data="Date" decoder="Date">
 			<jb:decodeParam name="format">mm/dd/yyyy</jb:decodeParam>
 		</jb:value>
+		
 		<jb:value property="amount" data="Amount"/>
 		<jb:value property="recipientId" data="RecipID"/>
+		
 		<jb:value property="party" data="Party" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
 			</jb:decodeParam>
@@ -39,7 +42,9 @@
 			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
+		
 		<jb:value property="committeeId" data="Otherid"/>
+		
 		<jb:value property="recipientType" data="RecipCode" decoder="DefaultedEnum">
 			<jb:decodeParam name="valuePreprocess">
 				if(value == "")
@@ -57,7 +62,80 @@
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
 		
-		<jb:value property="primCode" data="RealCode"/>
+		<jb:value property="recipientParty" data="RecipCode" decoder="DefaultedEnum">
+			<jb:decodeParam name="valuePreprocess">
+				if(value == "")
+					return "U";
+				else if (value[0] == "P")
+					return "U";
+				else
+					return value[1];
+			</jb:decodeParam>
+			<jb:decodeParam name="baseDecoder">DefaultedEnum</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
+			</jb:decodeParam>
+			<jb:decodeParam name="D">DEMOCRAT</jb:decodeParam>
+			<jb:decodeParam name="R">REPUBLICAN</jb:decodeParam>
+			<jb:decodeParam name="I">INDEPENDENT</jb:decodeParam>
+			<jb:decodeParam name="L">LIBERTARIAN</jb:decodeParam>
+			<jb:decodeParam name="3">THIRD_PARTY</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="recipientPacType" data="RecipCode" decoder="DefaultedEnum">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "")
+			        return "U";
+			    else if (value[0] == "P")
+					return value[1];
+				else if (value[1] == "P")
+					return "P";
+				else
+					return "C";		
+			</jb:decodeParam>
+			<jb:decodeParam name="baseDecoder">DefaultedEnum</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PacType</jb:decodeParam>
+			<jb:decodeParam name="P">PARTY</jb:decodeParam>
+			<jb:decodeParam name="C">CANDIDATE</jb:decodeParam>
+			<jb:decodeParam name="B">BUSINESS</jb:decodeParam>
+			<jb:decodeParam name="L">LABOR</jb:decodeParam>
+			<jb:decodeParam name="I">IDEOLOGICAL</jb:decodeParam>
+			<jb:decodeParam name="O">OTHER</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="recipientPrimCode" data="RecipPrimCode"/>
+		
+		<jb:value property="amendedReport" data="Amend" decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "Y")
+				{
+					return "true";
+				}
+				else
+				{
+					return "false";
+				}
+			</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="reportType" data="Report"/>
+		
+		<jb:value property="generalElectionContrib" data="PG" decoder="Boolean">
+		<jb:decodeParam name="valuePreprocess">
+				if (value == "G")
+				{
+					return "true";
+				}
+				else
+				{
+					return "false";
+				}
+			</jb:decodeParam>
+		</jb:value>
+		
 		<jb:value property="contributionType" data="Type" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.ContributionType</jb:decodeParam>
 			<jb:decodeParam name="24A">INDEPENDENT_CONTRIBUTION</jb:decodeParam>
@@ -69,19 +147,9 @@
 			<jb:decodeParam name="24Z">IN_KIND_CONTRIBUTION</jb:decodeParam>
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>	
-		<jb:value property="directContribution" data="DI" decoder="Boolean">
-			<jb:decodeParam name="valuePreprocess">
-				if (value == "D")
-				{
-					return "true";
-				}
-				else
-				{
-					return "false";
-				}
-			</jb:decodeParam>
-		</jb:value>
-		<jb:value property="fecCandidateId" data="FECCandID"/>
+		
+		<jb:value property="realCode" data="RealCode"/>
+		
 	</jb:bean>
 
 	<dao:inserter beanId="os-pac-contrib" dao="ncibi"

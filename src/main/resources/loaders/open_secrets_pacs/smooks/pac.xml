@@ -22,6 +22,7 @@
   		<jb:value property="affiliate" data="Affiliate"/>
   		<jb:value property="parentOrganization" data="Ultorg"/>
 		<jb:value property="recipientId" data="RecipID"/>
+		
 		<jb:value property="pacType" data="RecipCode" decoder="DefaultedEnum">
 			<jb:decodeParam name="valuePreprocess">
 			    if (value == "")
