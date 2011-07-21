@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="Cycle,Rpt,EIN,CRP527Name,Affiliate,UltOrg,RecipCode,CmteID,CID,ECCmteID,Party,PrimCode,Source,FFreq,Ctype,CSource,ViewPt,Comments,State"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="os-527-committee" class="org.fdl.scorecard.model.Committee527Type"
+		createOnElement="csv-record">
+
+		<jb:value property="cycle" data="Cycle"/>
+		
+		<jb:value property="reportingQuarter" data="Rpt" decoder="Integer">
+			<jb:decodeParam name="valuePreprocess">
+				value[1];
+			</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="reportingYear" data="Rpt" decoder="Integer">
+			<jb:decodeParam name="valuePreprocess">
+				value[2]+value[3];
+			</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="ein" data="EIN"/>
+		<jb:value property="name" data="CRP527Name"/>
+		<jb:value property="affiliate" data="Affiliate"/>
+		<jb:value property="parentOrganization" data="UltOrg"/>
+		
+		<jb:value property="pacType" data="RecipCode" decoder="DefaultedEnum">
+			<jb:decodeParam name="valuePreprocess">
+			    if (value == "")
+			        return "U";
+			    else if (value[0] == "P")
+					return value[1];
+				else if (value[1] == "P")
+					return "P";
+				else
+					return "C";		
+			</jb:decodeParam>
+			<jb:decodeParam name="baseDecoder">DefaultedEnum</jb:decodeParam>
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PacType</jb:decodeParam>
+			<jb:decodeParam name="P">PARTY</jb:decodeParam>
+			<jb:decodeParam name="C">CANDIDATE</jb:decodeParam>
+			<jb:decodeParam name="B">BUSINESS</jb:decodeParam>
+			<jb:decodeParam name="L">LABOR</jb:decodeParam>
+			<jb:decodeParam name="I">IDEOLOGICAL</jb:decodeParam>
+			<jb:decodeParam name="O">OTHER</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="committeeId" data="CmteID"/>
+		
+		<jb:value property="party" data="Party" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty
+			</jb:decodeParam>
+			<jb:decodeParam name="D">DEMOCRAT</jb:decodeParam>
+			<jb:decodeParam name="R">REPUBLICAN</jb:decodeParam>
+			<jb:decodeParam name="I">INDEPENDENT</jb:decodeParam>
+			<jb:decodeParam name="L">LIBERTARIAN</jb:decodeParam>
+			<jb:decodeParam name="3">THIRD_PARTY</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="primCode" data="PrimCode"/>
+		<jb:value property="primCodeSource" data="Source"/>
+		
+		<jb:value property="filingFrequency" data="FFreq" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.FilingFrequency</jb:decodeParam>
+			<jb:decodeParam name="Q">QUARTERLY</jb:decodeParam>
+			<jb:decodeParam name="M">MONTHLY</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="committeeType" data="Ctype" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.Committee527Type</jb:decodeParam>
+			<jb:decodeParam name="S">STATE</jb:decodeParam>
+			<jb:decodeParam name="F">FEDERAL</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="committeeTypeSource" data="CSource"/>
+		
+		<jb:value property="ideology" data="ViewPt" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
+			<jb:decodeParam name="enumType">org.fdl.scorecard.model.CommitteeIdeology</jb:decodeParam>
+			<jb:decodeParam name="L">LIBERAL</jb:decodeParam>
+			<jb:decodeParam name="C">CONSERVATIVE</jb:decodeParam>
+			<jb:decodeParam name="N">NONE</jb:decodeParam>
+			<jb:decodeParam name="U">UNKNOWN</jb:decodeParam>
+			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="comments" data="Comments"/>
+		<jb:value property="organizationState" data="State"/>
+
+	</jb:bean>
+
+	<dao:inserter beanId="os-527-committee" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>

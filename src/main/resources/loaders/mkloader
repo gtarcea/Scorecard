@@ -1,0 +1,10 @@
+#!/bin/sh
+
+mkdir -p $1/smooks
+mkdir $1/SQL
+cp open_secrets_crp/*.template $1
+cp open_secrets_candidates/smooks/*.xml $1/smooks
+cp open_secrets_crp/smooks.groovy $1
+
+vi $1/*.template
+cd $1
