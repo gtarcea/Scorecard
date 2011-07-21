@@ -13,9 +13,9 @@ var Client = require('mysql').Client,
 
 client.host = 'localhost';
 client.port = '3306';
-client.database = 'fdl';
-client.user = 'fdl';
-client.password = 'fdl$%card!!';
+client.database = 'DATABASE_HERE';
+client.user = 'USER_HERE';
+client.password = 'PASSWORD_HERE';
 
 client.connect();
 
