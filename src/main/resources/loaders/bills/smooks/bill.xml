@@ -6,13 +6,21 @@
 	<params>
 		<param name="stream.filter.type">SAX</param>
 	</params>
-<!-- -->
+
 	<jb:bean beanId="bill" class="org.fdl.scorecard.model.Bill"
 		createOnElement="bill">
-		<jb:value property="title" data="form/official-title"/>
+		<jb:value property="title" data="form/official-title"/>		
 	</jb:bean>
-<!--   -->	
+
 	<dao:inserter beanId="bill" dao="ncibi" insertOnElement="bill"/>
 	<dao:flusher dao="ncibi" flushOnElement="bill"/>
 
 </smooks-resource-list>	
+
+<!-- 
+		<jb:value property="title" data="form/official-title" decoder="String">
+			<jb:decodeParam name="valuePreprocess">
+				org.fdl.scorecard.mapper.TransformerTest.transformEntity(value);
+			</jb:decodeParam>
+		</jb:value>
+-->
