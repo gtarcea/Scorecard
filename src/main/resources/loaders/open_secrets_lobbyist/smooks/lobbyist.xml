@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="UniqID,Lobbyist_raw,Lobbyist,Lobbyist_id,Year,OfficialPosition,CID,Formercongmem"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="os-lobbyist" class="org.fdl.scorecard.model.Lobbyist"
+		createOnElement="csv-record">
+
+		<jb:value property="soprId" data="UniqID"/>		
+		<jb:value property="lobbyistNameRaw" data="Lobbyist_raw"/>
+		<jb:value property="lobbyistNameStandardized" data="Lobbyist"/>
+		<jb:value property="Lobbyist_id" data="lobbyistId"/>
+		<jb:value property="year" data="Year"/>
+		<jb:value property="previousGovernmentPosition" data="OfficialPosition"/>
+		<jb:value property="cid" data="CID"/>
+
+		<jb:value property="formerMemberOfCongress" data="Formercongmem" decoder="Boolean">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == "Y")
+				{
+					return "true";
+				}
+				else
+				{
+					return "false";
+				}
+			</jb:decodeParam>
+		</jb:value>
+
+	</jb:bean>
+
+	<dao:inserter beanId="os-lobbyist" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>
