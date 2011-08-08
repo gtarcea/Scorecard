@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="SI_ID,UniqID,issueID,Issue,SpecificIssue,Year"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="os-lobby-issue" class="org.fdl.scorecard.model.LobbyIssue"
+		createOnElement="csv-record">
+
+		<jb:value property="osId" data="SI_ID"/>
+		<jb:value property="soprId" data="UniqID"/>
+		<jb:value property="issueAreaCategory" data="issueID"/>
+		<jb:value property="issueAreaDescription" data="Issue"/>
+		<jb:value property="specificIssue" data="SpecificIssue"/>
+		<jb:value property="year" data="Year"/>
+		
+	</jb:bean>
+
+	<dao:inserter beanId="os-lobby-issue" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>

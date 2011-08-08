@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="Ultorg,Client,Total,Year,Catcode"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="os-industry-lobbying" class="org.fdl.scorecard.model.IndustryLobbying"
+		createOnElement="csv-record">
+
+		<jb:value property="parentCompany" data="Ultorg"/>
+		<jb:value property="clientName" data="Client"/>
+		
+		<jb:value property="totalAmount" data="Total" decoder="Double">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == '')
+					return 0;
+				else
+					return value;
+			</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="crpCategory" data="Catcode"/>
+		<jb:value property="year" data="Year"/>
+
+	</jb:bean>
+
+	<dao:inserter beanId="os-industry-lobbying" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>
