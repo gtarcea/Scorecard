@@ -9,6 +9,11 @@ drop table if exists fdl.Pac;
 drop table if exists fdl.CRPCategory;
 drop table if exists fdl.PacCandidateContribution;
 drop table if exists fdl.PacContribution;
+drop table if exists fdl.IndustryLobbying;
+drop table if exists fdl.LobbyIssue;
+drop table if exists fdl.Lobbyist;
+
+drop table if exists fdl.Chamber;
 
 create table fdl.Representative (
 	id int AUTO_INCREMENT primary key,
@@ -104,4 +109,49 @@ create table fdl.PacContribution (
 	generalElectionContrib bool,
 	contributionType varchar(48),
 	realCode varchar(8)
+);
+
+create table fdl.Chamber (
+	id int AUTO_INCREMENT primary key,
+	chamber varchar(8)
+);
+
+insert into fdl.Chamber(chamber) select 'SENATE';
+insert into fdl.Chamber(chamber) select 'HOUSE';
+
+create table fdl.CongressionalCommittee (
+	id int AUTO_INCREMENT primary key,
+	name varchar(128),
+	chamberId int foreign key references fdl.Chamber(id)
+);
+
+create table fdl.IndustryLobbying(
+	id int AUTO_INCREMENT primary key,
+	parentCompany varchar(48),
+	clientName varchar(48),
+	totalAmount decimal(12,2),
+	crpCategory varchar(8),
+	year int
+);
+
+create table fdl.LobbyIssue(
+	id int AUTO_INCREMENT primary key,
+	osId int,
+	soprId varchar(48),
+	issueAreaCategory varchar(3),
+	issueAreaDescription varchar(64),
+	specificIssue text,
+	year int
+);
+
+create table fdl.Lobbyist(
+	id int AUTO_INCREMENT primary key,
+	soprId varchar(48),
+	lobbyistNameRaw varchar(64),
+	lobbyistNameStandardized varchar(64),
+	lobbyistId varchar(16),
+	year int,
+	previousGovernmentPosition varchar(255),
+	cid varchar(16),
+	formerMemberOfCongress bool
 );

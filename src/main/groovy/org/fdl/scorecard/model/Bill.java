@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Bill
 {
     private int id;
-    private Chamber chamber = Chamber.HOUSE;
+    private CongressionalChamber chamber = CongressionalChamber.HOUSE;
     private String title;
     private Set<Representative> sponsors;
     private Set<Representative> cosponsors;
@@ -41,12 +41,12 @@ public class Bill
 
     @Enumerated(EnumType.STRING)
     @Column(name = "chamber")
-    public Chamber getChamber()
+    public CongressionalChamber getChamber()
     {
         return chamber;
     }
 
-    public void setChamber(Chamber chamber)
+    public void setChamber(CongressionalChamber chamber)
     {
         this.chamber = chamber;
     }
