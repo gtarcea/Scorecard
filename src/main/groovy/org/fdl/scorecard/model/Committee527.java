@@ -22,7 +22,7 @@ public class Committee527
     private String affiliate;
     private String parentOrganization;
     private PacType pacType;
-    private String committeeId;
+    private String fecId;
     private PoliticalParty party;
     private String primCode;
     private String primCodeSource;
@@ -135,15 +135,15 @@ public class Committee527
         this.pacType = pacType;
     }
 
-    @Column(name = "committeeId")
-    public String getCommitteeId()
+    @Column(name = "fecId")
+    public String getFecId()
     {
-        return committeeId;
+        return fecId;
     }
 
-    public void setCommitteeId(String committeeId)
+    public void setFecId(String fecId)
     {
-        this.committeeId = committeeId;
+        this.fecId = fecId;
     }
 
     @Column(name = "party")

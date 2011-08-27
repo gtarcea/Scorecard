@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd" xmlns:dao="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+
+	<params>
+		<param name="stream.filter.type">SAX</param>
+	</params>
+
+	<csv:reader
+		fields="ID,Rpt,FormID,SchAID,ContribID,Contrib,Amount,Date,Orgname,UltOrg,RealCode,RecipID,RecipCode,Party,Recipient,City,State,Zip,Zip4,PMSA,Employer,Occupation,YTD,Gender,Source"
+		quote="|"
+		separator=",">
+	</csv:reader>
+
+	<jb:bean beanId="527-income" class="org.fdl.scorecard.model.Committee527Income"
+		createOnElement="csv-record">
+
+		<jb:value property="reportingQuarter" data="Rpt" decoder="Integer">
+			<jb:decodeParam name="valuePreprocess">
+				value[1];
+			</jb:decodeParam>
+		</jb:value>
+		
+		<jb:value property="reportingYear" data="Rpt" decoder="Integer">
+			<jb:decodeParam name="valuePreprocess">
+				value[2]+value[3];
+			</jb:decodeParam>
+		</jb:value>	
+		
+		<jb:value property="organizationName" data="Orgname"/>
+		
+		<jb:value property="amount" data="Amount"/>
+
+	</jb:bean>
+
+	<dao:inserter beanId="527-income" dao="ncibi"
+		insertOnElement="csv-record" />
+	<dao:flusher dao="ncibi" flushOnElement="csv-set" />
+
+</smooks-resource-list>

@@ -58,7 +58,7 @@
 			<jb:decodeParam name="default">UNKNOWN</jb:decodeParam>
 		</jb:value>
 		
-		<jb:value property="committeeId" data="CmteID"/>
+		<jb:value property="fecId" data="CmteID"/>
 		
 		<jb:value property="party" data="Party" decoder="org.milyn.javabean.decoders.DefaultedEnumDecoder">
 			<jb:decodeParam name="enumType">org.fdl.scorecard.model.PoliticalParty

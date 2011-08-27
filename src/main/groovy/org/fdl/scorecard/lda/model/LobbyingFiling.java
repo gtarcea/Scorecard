@@ -14,8 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name = "sc.LobbyFiling")
-@Table(name = "LobbyFiling", schema = "fdl")
+//@Entity(name = "sc.LobbyFiling")
+//@Table(name = "LobbyFiling", schema = "fdl")
 public class LobbyingFiling
 {
     private int id;
