@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class LdaLobbyRegistrant
 {
     private int id;
-    private String registrantId;
+    private int registrantId;
     private String name;
     private String description;
     private String address;
@@ -40,12 +40,12 @@ public class LdaLobbyRegistrant
     }
 
     @Column(name = "registrantId")
-    public String getRegistrantId()
+    public int getRegistrantId()
     {
         return registrantId;
     }
 
-    public void setRegistrantId(String registrantId)
+    public void setRegistrantId(int registrantId)
     {
         this.registrantId = registrantId;
     }

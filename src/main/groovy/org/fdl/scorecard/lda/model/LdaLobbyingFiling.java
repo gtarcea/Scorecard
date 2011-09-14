@@ -23,7 +23,7 @@ public class LdaLobbyingFiling
     private String filingId;
     private int year;
     private double amount;
-    private String type;
+    private String ltype;
     private LdaLobbyRegistrant registrant;
     private LdaLobbyClient client;
     private Set<LdaGovernmentEntity> governmentEntities;
@@ -77,15 +77,15 @@ public class LdaLobbyingFiling
         this.amount = amount;
     }
 
-    @Column(name = "type")
-    public String getType()
+    @Column(name = "ltype")
+    public String getLtype()
     {
-        return type;
+        return ltype;
     }
 
-    public void setType(String type)
+    public void setLtype(String ltype)
     {
-        this.type = type;
+        this.ltype = ltype;
     }
 
     @ManyToOne (fetch = FetchType.LAZY)
@@ -131,6 +131,10 @@ public class LdaLobbyingFiling
         this.governmentEntities.add(ge);
     }
     
+    @OneToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @JoinTable (name = "LdaLobbyFiling2ForeignEntity", schema = "fdl",
+        joinColumns = { @JoinColumn (name = "lobbyFilingId", nullable = false) },
+        inverseJoinColumns = { @JoinColumn (name = "foreignEntityId") })
     public Set<LdaForeignEntity> getForeignEntities()
     {
         return foreignEntities;
@@ -163,7 +167,7 @@ public class LdaLobbyingFiling
     @OneToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable (name = "LdaLobbyFiling2LdaLobbyIssue", schema = "fdl",
         joinColumns = { @JoinColumn (name = "lobbyFilingId", nullable = false) },
-        inverseJoinColumns = { @JoinColumn (name = "ldaLobbyIssueId") })
+        inverseJoinColumns = { @JoinColumn (name = "lobbyIssueId") })
     public Set<LdaLobbyIssue> getIssues()
     {
         return issues;

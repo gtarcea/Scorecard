@@ -20,7 +20,7 @@ public class LdaLobbyClient
     private int id;
     private String name;
     private String description;
-    private String clientId;
+    private int clientId;
     private String status;
     private String contactName;
     private boolean stateOrLocalGovernment;
@@ -66,12 +66,12 @@ public class LdaLobbyClient
     }
 
     @Column(name = "clientId")
-    public String getClientId()
+    public int getClientId()
     {
         return clientId;
     }
 
-    public void setClientId(String clientId)
+    public void setClientId(int clientId)
     {
         this.clientId = clientId;
     }
