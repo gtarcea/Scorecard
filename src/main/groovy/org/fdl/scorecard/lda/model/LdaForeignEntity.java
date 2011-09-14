@@ -15,7 +15,7 @@ public class LdaForeignEntity
     private String name;
     private String country;
     private String ppbCountry;
-    private int ownershipPercentage;    
+    private int foreignOwnershipPercentage;    
     private String status;
 
     @Id
@@ -64,15 +64,15 @@ public class LdaForeignEntity
         this.ppbCountry = ppbCountry;
     }
 
-    @Column(name = "ownershipPercentage")
-    public int getOwnershipPercentage()
+    @Column(name = "foreignOwnershipPercentage")
+    public int getForeignOwnershipPercentage()
     {
-        return ownershipPercentage;
+        return foreignOwnershipPercentage;
     }
 
-    public void setOwnershipPercentage(int ownershipPercentage)
+    public void setForeignOwnershipPercentage(int foreignOwnershipPercentage)
     {
-        this.ownershipPercentage = ownershipPercentage;
+        this.foreignOwnershipPercentage = foreignOwnershipPercentage;
     }
 
     @Column(name = "status")
