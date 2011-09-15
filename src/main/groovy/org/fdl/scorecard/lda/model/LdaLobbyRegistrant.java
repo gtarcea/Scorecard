@@ -24,7 +24,7 @@ public class LdaLobbyRegistrant
     private String address;
     private String country;  
     private String ppbCountry;
-    private Set<LdaLobbyingFiling> filings = new HashSet<LdaLobbyingFiling>(0);
+    private Set<LdaLobbyFiling> filings = new HashSet<LdaLobbyFiling>(0);
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -107,17 +107,17 @@ public class LdaLobbyRegistrant
 
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE },
             fetch = FetchType.LAZY, mappedBy = "registrant")
-    public Set<LdaLobbyingFiling> getFilings()
+    public Set<LdaLobbyFiling> getFilings()
     {
         return filings;
     }
 
-    public void setFilings(Set<LdaLobbyingFiling> filings)
+    public void setFilings(Set<LdaLobbyFiling> filings)
     {
         this.filings = filings;
     }
     
-    public void addFiling(LdaLobbyingFiling filing)
+    public void addFiling(LdaLobbyFiling filing)
     {
         this.filings.add(filing);
     }

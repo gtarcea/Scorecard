@@ -17,13 +17,15 @@ import javax.persistence.Table;
 
 @Entity(name = "sc.LdaLobbyFiling")
 @Table(name = "LdaLobbyFiling", schema = "fdl")
-public class LdaLobbyingFiling
+public class LdaLobbyFiling
 {
     private int id;
     private String filingId;
     private int year;
+    private String received;
     private double amount;
     private String ltype;
+    private String period;
     private LdaLobbyRegistrant registrant;
     private LdaLobbyClient client;
     private Set<LdaGovernmentEntity> governmentEntities;
@@ -66,6 +68,17 @@ public class LdaLobbyingFiling
         this.year = year;
     }
 
+    @Column(name = "received")
+    public String getReceived()
+    {
+        return received;
+    }
+
+    public void setReceived(String received)
+    {
+        this.received = received;
+    }
+
     @Column(name = "amount")
     public double getAmount()
     {
@@ -86,6 +99,17 @@ public class LdaLobbyingFiling
     public void setLtype(String ltype)
     {
         this.ltype = ltype;
+    }
+
+    @Column(name = "period")
+    public String getPeriod()
+    {
+        return period;
+    }
+
+    public void setPeriod(String period)
+    {
+        this.period = period;
     }
 
     @ManyToOne (fetch = FetchType.LAZY)

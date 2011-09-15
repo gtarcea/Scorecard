@@ -7,7 +7,7 @@ drop table if exists fdl.LdaLobbyFiling2LdaLobbyist;
 drop table if exists fdl.LdaLobbyist;
 drop table if exists fdl.LdaLobbyFiling2LdaLobbyIssue;
 drop table if exists fdl.LdaLobbyIssue;
-drop table if exists fdl.LdaLobbyingFiling;
+drop table if exists fdl.LdaLobbyFiling;
 drop table if exists fdl.LdaLobbyingClient;
 drop table if exists fdl.LdaLobbyingRegistrant;
 
@@ -42,8 +42,10 @@ create table fdl.LdaLobbyFiling(
 	id int AUTO_INCREMENT primary key,
 	filingId varchar(64),
 	year int,
+	received varchar(32),
 	amount decimal(12,2),
-	ltype varchar,
+	ltype varchar(32),
+	period varchar(64),
 	registrantId int foreign key references fdl.LdaLobbyingRegistrant(id),
 	clientId int foreign key references fdl.LdaLobbyingClient(id)
 );
