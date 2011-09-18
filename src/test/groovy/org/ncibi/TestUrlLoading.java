@@ -27,10 +27,18 @@ public class TestUrlLoading
         System.out.println("\n\nDone.");
     }
     
+    @Test
+    public void testSunlightLabsUrl() throws Exception
+    {
+        System.out.println("testSunlightLabsUrl");
+        openUrl("http://services.sunlightlabs.com/api/committees.getList.xml?apikey=091fed4c5c0d45608f8f4662335d3537&chamber=Senate");
+        System.out.println("\n\nDone.");
+    }
+    
     private void openUrl(String url) throws Exception
     {
-        URL bill = new URL(url);
-        BufferedReader in = new BufferedReader(new InputStreamReader(bill.openStream()));
+        URL u = new URL(url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
 
         String inputLine;
 
