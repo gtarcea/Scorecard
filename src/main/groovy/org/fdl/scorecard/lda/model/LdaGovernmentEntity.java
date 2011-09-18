@@ -37,6 +37,10 @@ public class LdaGovernmentEntity
     {
         this.name = name;
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "LdaGovernmentEntity [id=" + id + ", name=" + name + "]";
+    }
 }

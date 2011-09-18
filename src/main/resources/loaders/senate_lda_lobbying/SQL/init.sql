@@ -8,8 +8,8 @@ drop table if exists fdl.LdaLobbyist;
 drop table if exists fdl.LdaLobbyFiling2LdaLobbyIssue;
 drop table if exists fdl.LdaLobbyIssue;
 drop table if exists fdl.LdaLobbyFiling;
-drop table if exists fdl.LdaLobbyingClient;
-drop table if exists fdl.LdaLobbyingRegistrant;
+drop table if exists fdl.LdaLobbyClient;
+drop table if exists fdl.LdaLobbyRegistrant;
 
 
 create table fdl.LdaLobbyRegistrant(
@@ -18,12 +18,11 @@ create table fdl.LdaLobbyRegistrant(
 	name varchar(128),
 	description text,
 	address varchar(256),
-	country varchar(32),
-	ppbCountry varchar(32)
+	country varchar(64),
+	ppbCountry varchar(64)
 );
 
-
-create table fdl.LdaLobbyingClient(
+create table fdl.LdaLobbyClient(
 	id int AUTO_INCREMENT primary key,
 	name varchar(128),
 	description text,
@@ -31,23 +30,24 @@ create table fdl.LdaLobbyingClient(
 	status varchar(32),
 	contactName varchar(64),
 	stateOrLocalGovernment bool,
-	country varchar(32),
-	ppbCountry varchar(32),
+	country varchar(64),
+	ppbCountry varchar(64),
 	state varchar(32),
 	ppbState varchar(32)
 );
-
 
 create table fdl.LdaLobbyFiling(
 	id int AUTO_INCREMENT primary key,
 	filingId varchar(64),
 	year int,
 	received varchar(32),
-	amount decimal(12,2),
-	ltype varchar(32),
+	amount double(12,2),
+	ltype varchar(64),
 	period varchar(64),
-	registrantId int foreign key references fdl.LdaLobbyingRegistrant(id),
-	clientId int foreign key references fdl.LdaLobbyingClient(id)
+	registrantId int,
+	foreign key (registrantId) references fdl.LdaLobbyRegistrant(id) on delete cascade,
+	clientId int null,
+	foreign key (clientId) references fdl.LdaLobbyClient(id) on delete cascade
 );
 
 create table fdl.LdaGovernmentEntity(
@@ -56,8 +56,10 @@ create table fdl.LdaGovernmentEntity(
 );
 
 create table fdl.LdaLobbyFiling2GovernmentEntity(
-	lobbyFilingId int foreign key references fdl.LdaLobbyFiling(id),
-	governmentEntityId int foreign key references fdl.LdaGovernmentEntity(id)
+	lobbyFilingId int,
+	foreign key (lobbyFilingId) references fdl.LdaLobbyFiling(id) on delete cascade,
+	governmentEntityId int,
+	foreign key (governmentEntityId) references fdl.LdaGovernmentEntity(id) on delete cascade
 );
 
 create table fdl.LdaForeignEntity(
@@ -65,13 +67,15 @@ create table fdl.LdaForeignEntity(
 	name varchar(128),
 	country varchar(64),
 	ppbCountry varchar(64),
-	ownershipPercentage int,
+	foreignOwnershipPercentage int,
 	status varchar(8)
 );
 
 create table fdl.LdaLobbyFiling2ForeignEntity(
-	lobbyFilingId int foreign key references fdl.LdaLobbyFiling(id),
-	foreignEntityId int foreign key references fdl.LdaForeignEntity(id)
+	lobbyFilingId int,
+	foreign key (lobbyFilingId) references fdl.LdaLobbyFiling(id) on delete cascade,
+	foreignEntityId int,
+	foreign key (foreignEntityId) references fdl.LdaForeignEntity(id) on delete cascade
 );
 
 create table fdl.LdaLobbyist(
@@ -83,8 +87,10 @@ create table fdl.LdaLobbyist(
 );
 
 create table fdl.LdaLobbyFiling2LdaLobbyist(
-	lobbyFilingId int foreign key references fdl.LdaLobbyFiling(id),
-	lobbyistId int foreign key references fdl.LdaLobbyist(id)
+	lobbyFilingId int,
+	foreign key (lobbyFilingId) references fdl.LdaLobbyFiling(id) on delete cascade,
+	lobbyistId int,
+	foreign key (lobbyistId) references fdl.LdaLobbyist(id) on delete cascade
 );
 
 create table fdl.LdaLobbyIssue(
@@ -94,6 +100,8 @@ create table fdl.LdaLobbyIssue(
 );
 
 create table fdl.LdaLobbyFiling2LdaLobbyIssue(
-	lobbyFilingId int foreign key references fdl.LdaLobbyFiling(id),
-	lobbyIssueId int foreign key references fdl.LdaLobbyFiling(id),
+	lobbyFilingId int,
+	foreign key (lobbyFilingId) references fdl.LdaLobbyFiling(id) on delete cascade,
+	lobbyIssueId int,
+	foreign key (lobbyIssueId) references fdl.LdaLobbyIssue(id) on delete cascade
 );

@@ -113,7 +113,7 @@ public class LdaLobbyFiling
     }
 
     @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "registrantId", nullable = false)
+    @JoinColumn (name = "registrantId", nullable = true)
     public LdaLobbyRegistrant getRegistrant()
     {
         return registrant;
@@ -125,7 +125,7 @@ public class LdaLobbyFiling
     }
 
     @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "clientId", nullable = false)
+    @JoinColumn (name = "clientId", nullable = true)
     public LdaLobbyClient getClient()
     {
         return client;
@@ -190,7 +190,7 @@ public class LdaLobbyFiling
 
     @OneToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable (name = "LdaLobbyFiling2LdaLobbyIssue", schema = "fdl",
-        joinColumns = { @JoinColumn (name = "lobbyFilingId", nullable = false) },
+        joinColumns = { @JoinColumn (name = "lobbyFilingId") },
         inverseJoinColumns = { @JoinColumn (name = "lobbyIssueId") })
     public Set<LdaLobbyIssue> getIssues()
     {
@@ -205,5 +205,15 @@ public class LdaLobbyFiling
     public void addIssue(LdaLobbyIssue issue)
     {
         this.issues.add(issue);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "LdaLobbyFiling [id=" + id + ", filingId=" + filingId + ", year=" + year + ", received="
+                + received + ", amount=" + amount + ", ltype=" + ltype + ", period=" + period
+                + ", registrant=" + registrant + ", client=" + client + ", governmentEntities="
+                + governmentEntities + ", foreignEntities=" + foreignEntities + ", lobbyists=" + lobbyists
+                + ", issues=" + issues + "]";
     }
 }

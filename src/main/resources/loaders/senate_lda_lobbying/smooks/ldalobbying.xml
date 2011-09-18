@@ -11,27 +11,35 @@
 		<jb:value property="filingId" data="Filing/@ID"/>
 		<jb:value property="year" data="Filing/@Year"/>
 		<jb:value property="received" data="Filing/@Received"/>
-		<jb:value property="amount" data="Filing/@Amount"/>
+		<jb:value property="amount" data="Filing/@Amount" decoder="Double">
+			<jb:decodeParam name="valuePreprocess">
+				if (value == '')
+					return 0;
+				else
+					return value;
+			</jb:decodeParam>
+		</jb:value>
 		<jb:value property="ltype" data="Filing/@Type"/>
 		<jb:value property="period" data="Filing/@Period"/>
+ 
 		<jb:wiring property="registrant" beanIdRef="lda-registrant"/>
 		<jb:wiring property="client" beanIdRef="lda-client"/>
-		<jb:wiring setterMethod="addGovernmentEntity" beanIdRef="lda-government-entity"/>
-		<jb:wiring setterMethod="addForeignEntity" beanIdRef="lda-foreign-entity"/>
-		<jb:wiring setterMethod="addLobbyist" beanIdRef="lda-lobbyist"/>
-		<jb:wiring setterMethod="addIssue" beanIdRef="lda-issue"/>
+		<jb:wiring property="governmentEntities" beanIdRef="lda-government-entities"/>
+		<jb:wiring property="foreignEntities" beanIdRef="lda-foreign-entities"/>
+		<jb:wiring property="lobbyists" beanIdRef="lda-lobbyists"/>
+		<jb:wiring property="issues" beanIdRef="lda-issues"/>
 	</jb:bean>
 	
 	<jb:bean beanId="lda-registrant" class="org.fdl.scorecard.lda.model.LdaLobbyRegistrant"
 			createOnElement="Registrant">
-		<jb:bean property="registrantId" data="Registrant/@RegistrantID"/>
-		<jb:bean property="name" data="Registrant/@RegistrantName"/>
-		<jb:bean property="description" data="Registrant/@GeneralDescription"/>
-		<jb:bean property="address" data="Registrant/@Address"/>
-		<jb:bean property="country" data="Registrant/@RegistrantCountry"/>
-		<jb:bean property="ppbCountry" data="Registrant/@RegistrantPPBCountry"/>
+		<jb:value property="registrantId" data="Registrant/@RegistrantID"/>
+		<jb:value property="name" data="Registrant/@RegistrantName"/>
+		<jb:value property="description" data="Registrant/@GeneralDescription"/>
+		<jb:value property="address" data="Registrant/@Address"/>
+		<jb:value property="country" data="Registrant/@RegistrantCountry"/>
+		<jb:value property="ppbCountry" data="Registrant/@RegistrantPPBCountry"/>
 	</jb:bean>
-	
+ 	
 	<jb:bean beanId="lda-client" class="org.fdl.scorecard.lda.model.LdaLobbyClient"
 			createOnElement="Client">
 		<jb:value property="name" data="Client/@ClientName"/>
@@ -46,9 +54,17 @@
 		<jb:value property="ppbState" data="Client/@ClientPPBState"/>
 	</jb:bean>
 	
+	<jb:bean beanId="lda-government-entities" class="java.util.HashSet" createOnElement="GovernmentEntities">
+		<jb:wiring beanIdRef="lda-government-entity"/>
+	</jb:bean>
+	
 	<jb:bean beanId="lda-government-entity" class="org.fdl.scorecard.lda.model.LdaGovernmentEntity"
 			createOnElement="GovernmentEntities/GovernmentEntity">
 		<jb:value property="name" data="GovernmentEntity/@GovEntityName"/>
+	</jb:bean>
+	
+	<jb:bean beanId="lda-foreign-entities" class="java.util.HashSet" createOnElement="ForeignEntities">
+		<jb:wiring beanIdRef="lda-foreign-entity"/>
 	</jb:bean>
 	
 	<jb:bean beanId="lda-foreign-entity" class="org.fdl.scorecard.lda.model.LdaForeignEntity"
@@ -60,12 +76,20 @@
 		<jb:value property="status" data="Entity/@ForeignEntityStatus"/>
 	</jb:bean>
 	
+	<jb:bean beanId="lda-lobbyists" class="java.util.HashSet" createOnElement="Lobbyists">
+		<jb:wiring beanIdRef="lda-lobbyist"/>
+	</jb:bean>
+	
 	<jb:bean beanId="lda-lobbyist" class="org.fdl.scorecard.lda.model.LdaLobbyist"
 			createOnElement="Lobbyists/Lobbyist">
 		<jb:value property="name" data="Lobbyist/@LobbyistName"/>
 		<jb:value property="status" data="Lobbyist/@LobbyistStatus"/>
 		<jb:value property="indicator" data="Lobbyist/@LobbyisteIndicator"/>
 		<jb:value property="officialPosition" data="Lobbyist/@OfficialPosition"/>
+	</jb:bean>
+	
+	<jb:bean beanId="lda-issues" class="java.util.HashSet" createOnElement="Issues">
+		<jb:wiring beanIdRef="lda-issue"/>
 	</jb:bean>
 	
 	<jb:bean beanId="lda-issue" class="org.fdl.scorecard.lda.model.LdaLobbyIssue"

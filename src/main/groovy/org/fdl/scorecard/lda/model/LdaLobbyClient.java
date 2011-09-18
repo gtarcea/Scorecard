@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "LdaLobbyClient", schema = "fdl")
 public class LdaLobbyClient
 {
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private int clientId;
@@ -33,12 +33,12 @@ public class LdaLobbyClient
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
@@ -117,6 +117,7 @@ public class LdaLobbyClient
 
     public void setCountry(String country)
     {
+        //System.out.println("country = " + country.length() + "/" + country);
         this.country = country;
     }
 
@@ -168,5 +169,15 @@ public class LdaLobbyClient
     public void addFiling(LdaLobbyFiling filing)
     {
         this.filings.add(filing);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "LdaLobbyClient [id=" + id + ", name=" + name + ", description=" + description + ", clientId="
+                + clientId + ", status=" + status + ", contactName=" + contactName
+                + ", stateOrLocalGovernment=" + stateOrLocalGovernment + ", country=" + country
+                + ", ppbCountry=" + ppbCountry + ", state=" + state + ", ppbState=" + ppbState + ", filings="
+                + filings + "]";
     }
 }

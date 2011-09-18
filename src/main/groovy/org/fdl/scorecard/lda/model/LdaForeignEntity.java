@@ -85,4 +85,12 @@ public class LdaForeignEntity
     {
         this.status = status;
     }
+
+    @Override
+    public String toString()
+    {
+        return "LdaForeignEntity [id=" + id + ", name=" + name + ", country=" + country + ", ppbCountry="
+                + ppbCountry + ", foreignOwnershipPercentage=" + foreignOwnershipPercentage + ", status="
+                + status + "]";
+    }
 }

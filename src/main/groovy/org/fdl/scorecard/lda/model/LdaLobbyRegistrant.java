@@ -121,4 +121,12 @@ public class LdaLobbyRegistrant
     {
         this.filings.add(filing);
     }
+
+    @Override
+    public String toString()
+    {
+        return "LdaLobbyRegistrant [id=" + id + ", registrantId=" + registrantId + ", name=" + name
+                + ", description=" + description + ", address=" + address + ", country=" + country
+                + ", ppbCountry=" + ppbCountry + ", filings=" + filings + "]";
+    }
 }
