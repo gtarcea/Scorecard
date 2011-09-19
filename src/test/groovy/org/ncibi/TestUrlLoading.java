@@ -54,6 +54,12 @@ public class TestUrlLoading
         openUriAsFile("file:///Users/gtarcea/GIT/Scorecard/src/main/resources");
     }
     
+    @Test(expected = java.lang.IllegalArgumentException.class) 
+    public void testOpenUriAsDirectoryThatIsAHttpUrl() throws Exception
+    {
+        openUriAsFile("http://thomas.loc.gov/home/gpoxmlc112/h87_ih.xml");
+    }
+    
     private void openUriAsFile(String uri) throws Exception
     {
         URI dir = new URI(uri);
