@@ -7,8 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 @Entity(name = "sc.LdaLobbyIssue")
 @Table(name = "LdaLobbyIssue", schema = "fdl")
+@Indexed
 public class LdaLobbyIssue
 {
     private int id;
@@ -40,6 +46,7 @@ public class LdaLobbyIssue
     }
 
     @Column(name = "specificIssue")
+    @Field(index = Index.TOKENIZED, store = Store.YES)
     public String getSpecificIssue()
     {
         return specificIssue;
