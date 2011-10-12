@@ -1,6 +1,8 @@
 package org.fdl.scorecard.db
 
-import javax.persistence.Persistence;
+import javax.persistence.Persistence
+
+import org.hibernate.Session
 
 class FdlDB
 {
@@ -10,12 +12,12 @@ class FdlDB
 
     static
     {
-        emf = Persistence.createEntityManagerFactory("metdb");
+        emf = Persistence.createEntityManagerFactory("scorecard");
         em = emf.createEntityManager();
         session = em.delegate;
     }
 
-    public static def getSession()
+    public static Session getSession()
     {
         return session
     }
