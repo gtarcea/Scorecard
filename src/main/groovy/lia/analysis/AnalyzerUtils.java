@@ -127,6 +127,25 @@ public class AnalyzerUtils
         while (stream.incrementToken())
         { // #C
 
+            String tokenTerm = term.term();
+            if (tokenTerm.length() == 1)
+            {
+                
+            }
+            else if (tokenTerm.length() == 2)
+            {
+                
+            }
+            else if (tokenTerm.length() == 4)
+            {
+                
+            }
+            else if (tokenTerm.length() > 4)
+            {
+                String startsWith = tokenTerm.substring(0, 3);
+            }
+            
+            
             int increment = posIncr.getPositionIncrement(); // #D
             if (increment > 0)
             { // #D
@@ -178,9 +197,9 @@ public class AnalyzerUtils
         System.out.println("SimpleAnalyzer");
         String sentence1 = "oppose HR 503 and S 727 criminalizing transport and export of equines for slaughter for human consumption";
         String sentence2 = "oppose H.R.503 and S.727 criminalizing transport and export of equines for slaughter for human consumption";
-        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence1);
-        System.out.println("\n");
-        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence2);
+//        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence1);
+//        System.out.println("\n");
+//        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence2);
 
         System.out.println("\n----");
         System.out.println("StandardAnalyzer");
