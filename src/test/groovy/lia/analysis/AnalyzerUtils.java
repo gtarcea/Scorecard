@@ -194,7 +194,7 @@ public class AnalyzerUtils
 
     public static void main(String[] args) throws IOException
     {
-        System.out.println("SimpleAnalyzer");
+        //System.out.println("SimpleAnalyzer");
         String sentence1 = "oppose HR 503 and S 727 criminalizing transport and export of equines for slaughter for human consumption";
         String sentence2 = "oppose H.R.503 and S.727 criminalizing transport and export of equines for slaughter for human consumption";
 //        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence1);
