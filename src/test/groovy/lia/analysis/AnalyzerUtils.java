@@ -15,20 +15,25 @@ package lia.analysis;
  * License for the specific lan
  */
 
-import junit.framework.Assert;
-import org.apache.lucene.util.AttributeSource;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.SimpleAnalyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.util.Version;
-
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import junit.framework.Assert;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.analysis.tokenattributes.TermAttribute;
+import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.util.AttributeSource;
+import org.apache.lucene.util.Version;
 
 // From chapter 4
 public class AnalyzerUtils
@@ -130,22 +135,21 @@ public class AnalyzerUtils
             String tokenTerm = term.term();
             if (tokenTerm.length() == 1)
             {
-                
+
             }
             else if (tokenTerm.length() == 2)
             {
-                
+
             }
             else if (tokenTerm.length() == 4)
             {
-                
+
             }
             else if (tokenTerm.length() > 4)
             {
                 String startsWith = tokenTerm.substring(0, 3);
             }
-            
-            
+
             int increment = posIncr.getPositionIncrement(); // #D
             if (increment > 0)
             { // #D
@@ -194,18 +198,26 @@ public class AnalyzerUtils
 
     public static void main(String[] args) throws IOException
     {
-        //System.out.println("SimpleAnalyzer");
+        // System.out.println("SimpleAnalyzer");
         String sentence1 = "oppose HR 503 and S 727 criminalizing transport and export of equines for slaughter for human consumption";
         String sentence2 = "oppose H.R.503 and S.727 criminalizing transport and export of equines for slaughter for human consumption";
-//        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence1);
-//        System.out.println("\n");
-//        displayTokensWithFullDetails(new SimpleAnalyzer(), sentence2);
+        String sentence3 = "the";
+        // displayTokensWithFullDetails(new SimpleAnalyzer(), sentence1);
+        // System.out.println("\n");
+        // displayTokensWithFullDetails(new SimpleAnalyzer(), sentence2);
 
         System.out.println("\n----");
         System.out.println("StandardAnalyzer");
+        System.out.println("\n" + sentence1 + "\n");
         displayTokensWithFullDetails(new StandardAnalyzer(Version.LUCENE_30), sentence1);
-        System.out.println("\n");
+        System.out.println("\n" + sentence2 + "\n");
         displayTokensWithFullDetails(new StandardAnalyzer(Version.LUCENE_30), sentence2);
+        System.out.println("\n" + sentence3 + "\n");
+        Set<String> emptyStopwordsSet = Collections.emptySet();
+        Map<String, Analyzer> fieldAnalyzers = new HashMap<String, Analyzer>();
+        fieldAnalyzers.put("contents", new StandardAnalyzer(Version.LUCENE_30, emptyStopwordsSet));
+        Analyzer a = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_30), fieldAnalyzers);
+        displayTokensWithFullDetails(a, sentence3);
     }
 }
 
